@@ -115,10 +115,10 @@ export async function GET(
 // POST /api/boards/:id/tasks - Create a new task
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id: boardId } = params;
+    const { id: boardId } = await params;
     const body = await request.json();
     
     const {
