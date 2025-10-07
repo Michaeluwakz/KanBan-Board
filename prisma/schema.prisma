@@ -1,0 +1,267 @@
+// This is your Prisma schema file - SQLite version for quick local development
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum BoardRole {
+  OWNER
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+enum ActivityType {
+  BOARD_CREATED
+  BOARD_UPDATED
+  BOARD_ARCHIVED
+  TASK_CREATED
+  TASK_UPDATED
+  TASK_MOVED
+  TASK_DELETED
+  TASK_ASSIGNED
+  TASK_UNASSIGNED
+  COMMENT_ADDED
+  ATTACHMENT_ADDED
+  CHECKLIST_ITEM_ADDED
+  CHECKLIST_ITEM_COMPLETED
+  COLUMN_CREATED
+  COLUMN_UPDATED
+  COLUMN_DELETED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  boards        BoardMember[]
+  assignedTasks TaskAssignee[]
+  comments      Comment[]
+  activities    Activity[]
+  createdBoards Board[]   @relation("BoardCreator")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Board {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  background  String?
+  isArchived  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  creatorId   String
+
+  creator  User          @relation("BoardCreator", fields: [creatorId], references: [id])
+  members  BoardMember[]
+  columns  Column[]
+  tasks    Task[]
+  labels   Label[]
+  activities Activity[]
+}
+
+model BoardMember {
+  id        String    @id @default(cuid())
+  role      BoardRole @default(MEMBER)
+  joinedAt  DateTime  @default(now())
+  boardId   String
+  userId    String
+
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([boardId, userId])
+}
+
+model Column {
+  id       String  @id @default(cuid())
+  name     String
+  position Int
+  color    String?
+  wipLimit Int?
+  isHidden Int     @default(0)
+  boardId  String
+
+  board Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  tasks Task[]
+}
+
+model Task {
+  id           String    @id @default(cuid())
+  title        String
+  description  String?
+  position     Int
+  priority     Priority  @default(MEDIUM)
+  dueDate      DateTime?
+  startDate    DateTime?
+  timeEstimate Int?
+  timeSpent    Int?
+  isArchived   Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  boardId      String
+  columnId     String
+
+  board        Board            @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  column       Column           @relation(fields: [columnId], references: [id], onDelete: Cascade)
+  assignees    TaskAssignee[]
+  labels       TaskLabel[]
+  comments     Comment[]
+  attachments  Attachment[]
+  checklistItems ChecklistItem[]
+  activities   Activity[]
+  dependencies TaskDependency[] @relation("DependentTask")
+  dependents   TaskDependency[] @relation("BlockingTask")
+}
+
+model TaskAssignee {
+  id        String   @id @default(cuid())
+  taskId    String
+  userId    String
+  assignedAt DateTime @default(now())
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, userId])
+}
+
+model Label {
+  id      String  @id @default(cuid())
+  name    String
+  color   String
+  boardId String
+
+  board Board       @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  tasks TaskLabel[]
+
+  @@unique([boardId, name])
+}
+
+model TaskLabel {
+  id      String @id @default(cuid())
+  taskId  String
+  labelId String
+
+  task  Task  @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  label Label @relation(fields: [labelId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, labelId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  taskId    String
+  userId    String
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Attachment {
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  size      Int
+  mimeType  String
+  createdAt DateTime @default(now())
+  taskId    String
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model ChecklistItem {
+  id          String   @id @default(cuid())
+  content     String
+  isCompleted Int      @default(0)
+  position    Int
+  createdAt   DateTime @default(now())
+  taskId      String
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model TaskDependency {
+  id              String   @id @default(cuid())
+  dependentTaskId String
+  blockingTaskId  String
+  createdAt       DateTime @default(now())
+
+  dependentTask Task @relation("DependentTask", fields: [dependentTaskId], references: [id], onDelete: Cascade)
+  blockingTask  Task @relation("BlockingTask", fields: [blockingTaskId], references: [id], onDelete: Cascade)
+
+  @@unique([dependentTaskId, blockingTaskId])
+}
+
+model Activity {
+  id        String       @id @default(cuid())
+  type      ActivityType
+  content   String
+  metadata  String?
+  createdAt DateTime     @default(now())
+  boardId   String
+  taskId    String?
+  userId    String
+
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  task  Task? @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
