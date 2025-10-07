@@ -11,7 +11,7 @@ import {
   BarChart3,
   Columns,
 } from 'lucide-react';
-import { Board } from '@/types';
+import { Board, Column } from '@/types';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Avatar from '@/components/ui/Avatar';
@@ -155,7 +155,7 @@ const BoardHeader: React.FC<BoardHeaderProps> = ({
     }
   };
 
-  const handleReorderColumns = async (columns: unknown[]) => {
+  const handleReorderColumns = async (columns: Column[]) => {
     try {
       // Update positions for all columns
       const updatePromises = columns.map((column, index) =>
