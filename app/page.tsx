@@ -11,11 +11,6 @@ export default function Home() {
   const { boards, currentBoard, tasks, setBoards, setCurrentBoard, setColumns, setTasks, setLabels } = useBoardStore();
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // Fetch boards on mount
-    fetchBoards();
-  }, [fetchBoards]);
-
   const fetchBoards = useCallback(async () => {
     try {
       const response = await fetch('/api/boards');
@@ -29,6 +24,11 @@ export default function Home() {
       setIsLoading(false);
     }
   }, [setBoards]);
+
+  useEffect(() => {
+    // Fetch boards on mount
+    fetchBoards();
+  }, [fetchBoards]);
 
   const fetchBoardDetails = async (boardId: string) => {
     try {
