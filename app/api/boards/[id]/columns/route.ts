@@ -4,10 +4,10 @@ import { prisma } from '@/lib/prisma';
 // GET /api/boards/:id/columns - Get all columns for a board
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id: boardId } = params;
+    const { id: boardId } = await params;
 
     const columns = await prisma.column.findMany({
       where: { boardId },
@@ -34,10 +34,10 @@ export async function GET(
 // POST /api/boards/:id/columns - Create a new column
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id: boardId } = params;
+    const { id: boardId } = await params;
     const body = await request.json();
     const { name, color } = body;
 

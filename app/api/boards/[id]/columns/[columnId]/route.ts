@@ -4,10 +4,10 @@ import { prisma } from '@/lib/prisma';
 // PUT /api/boards/:id/columns/:columnId - Update a column
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string; columnId: string } }
+  { params }: { params: Promise<{ id: string; columnId: string }> }
 ) {
   try {
-    const { id: boardId, columnId } = params;
+    const { id: boardId, columnId } = await params;
     const body = await request.json();
     const { name, color, position } = body;
 
@@ -56,10 +56,10 @@ export async function PUT(
 // DELETE /api/boards/:id/columns/:columnId - Delete a column
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; columnId: string } }
+  { params }: { params: Promise<{ id: string; columnId: string }> }
 ) {
   try {
-    const { id: boardId, columnId } = params;
+    const { id: boardId, columnId } = await params;
 
     // TODO: Get user from session and check permissions
     const userId = 'temp-user-id';

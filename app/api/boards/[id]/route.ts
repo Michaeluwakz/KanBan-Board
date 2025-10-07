@@ -4,10 +4,10 @@ import { prisma } from '@/lib/prisma';
 // GET /api/boards/:id - Get board details
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const board = await prisma.board.findUnique({
       where: { id },
@@ -63,10 +63,10 @@ export async function GET(
 // PUT /api/boards/:id - Update board
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { name, description, background, isArchived } = body;
 
@@ -133,10 +133,10 @@ export async function PUT(
 // DELETE /api/boards/:id - Delete board
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     // TODO: Get user from session and check if user is owner
 

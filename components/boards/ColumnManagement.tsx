@@ -25,7 +25,6 @@ const ColumnManagement: React.FC<ColumnManagementProps> = ({
   onAddColumn,
   onUpdateColumn,
   onDeleteColumn,
-  onReorderColumns: _onReorderColumns,
 }) => {
   const [newColumnName, setNewColumnName] = useState('');
   const [newColumnColor, setNewColumnColor] = useState('#3B82F6');
