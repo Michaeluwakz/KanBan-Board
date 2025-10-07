@@ -133,7 +133,7 @@ export default function Home() {
     <div className="flex flex-col h-screen">
       <BoardHeader
         board={currentBoard}
-        tasks={tasks}
+        tasks={Array.from(tasks.values())}
         onUpdateBoard={handleUpdateBoard}
         onArchiveBoard={handleArchiveBoard}
       />
