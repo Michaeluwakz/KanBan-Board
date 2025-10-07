@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Board } from '@/types';
 import { useBoardStore } from '@/store/board-store';
 import BoardList from '@/components/boards/BoardList';
@@ -14,9 +14,9 @@ export default function Home() {
   useEffect(() => {
     // Fetch boards on mount
     fetchBoards();
-  }, []);
+  }, [fetchBoards]);
 
-  const fetchBoards = async () => {
+  const fetchBoards = useCallback(async () => {
     try {
       const response = await fetch('/api/boards');
       if (response.ok) {
@@ -28,7 +28,7 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [setBoards]);
 
   const fetchBoardDetails = async (boardId: string) => {
     try {

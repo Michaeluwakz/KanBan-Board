@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Users, UserPlus, Mail, Crown, Shield, Eye, X } from 'lucide-react';
-import { Board, BoardMember, BoardRole } from '@/types';
+import { Board, BoardRole } from '@/types';
 import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';

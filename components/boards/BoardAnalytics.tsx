@@ -1,11 +1,10 @@
 'use client';
 
 import React from 'react';
-import { BarChart3, TrendingUp, Clock, CheckCircle, AlertCircle, Users } from 'lucide-react';
-import { Board, Task, Priority } from '@/types';
+import { BarChart3, TrendingUp, CheckCircle, AlertCircle, Users } from 'lucide-react';
+import { Board, Task } from '@/types';
 import Modal from '@/components/ui/Modal';
 import Card from '@/components/ui/Card';
-import Badge from '@/components/ui/Badge';
 
 export interface BoardAnalyticsProps {
   board: Board;

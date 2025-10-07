@@ -2,9 +2,6 @@
 
 import React, { useState } from 'react';
 import {
-  Star,
-  Users,
-  Filter,
   Search,
   MoreHorizontal,
   Settings,
@@ -14,7 +11,7 @@ import {
   BarChart3,
   Columns,
 } from 'lucide-react';
-import { Board, BoardRole } from '@/types';
+import { Board } from '@/types';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Avatar from '@/components/ui/Avatar';
@@ -25,7 +22,7 @@ import ColumnManagement from './ColumnManagement';
 
 export interface BoardHeaderProps {
   board: Board;
-  tasks?: any[];
+  tasks?: unknown[];
   onUpdateBoard?: (boardId: string, updates: Partial<Board>) => void;
   onArchiveBoard?: (boardId: string) => void;
 }
@@ -158,7 +155,7 @@ const BoardHeader: React.FC<BoardHeaderProps> = ({
     }
   };
 
-  const handleReorderColumns = async (columns: any[]) => {
+  const handleReorderColumns = async (columns: unknown[]) => {
     try {
       // Update positions for all columns
       const updatePromises = columns.map((column, index) =>

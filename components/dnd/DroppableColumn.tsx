@@ -40,3 +40,4 @@ const DroppableColumn: React.FC<DroppableColumnProps> = ({
 
 export default DroppableColumn;
 
+

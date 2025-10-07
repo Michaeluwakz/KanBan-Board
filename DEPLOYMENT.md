@@ -386,3 +386,4 @@ psql $DATABASE_URL < backup_20240101.sql
 
 For deployment issues, contact support@kanbanboard.com or open an issue on GitHub.
 
+

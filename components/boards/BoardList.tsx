@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Plus, Star, Archive, Folder, Sparkles } from 'lucide-react';
+import { Plus, Sparkles } from 'lucide-react';
 import { Board } from '@/types';
 import Card, { CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -87,7 +87,7 @@ const BoardList: React.FC<BoardListProps> = ({
               </div>
               <div className="flex items-center gap-1.5 text-muted-foreground">
                 <span>✅</span>
-                <span>{(board as any)._count?.tasks || board.tasks?.length || 0} tasks</span>
+                <span>{(board as { _count?: { tasks?: number }; tasks?: unknown[] })._count?.tasks || board.tasks?.length || 0} tasks</span>
               </div>
             </div>
           </div>

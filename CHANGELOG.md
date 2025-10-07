@@ -167,3 +167,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For older versions and detailed changes, see [GitHub Releases](https://github.com/yourorg/kanban-board/releases).
 
+

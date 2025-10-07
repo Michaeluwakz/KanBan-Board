@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { BoardRole } from '@prisma/client';
 
 // GET /api/boards - List all boards for the current user
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // TODO: Get user from session
     const userId = 'temp-user-id'; // Replace with actual user from session
@@ -153,4 +153,5 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
 

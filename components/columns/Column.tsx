@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Plus, MoreVertical, Edit2, Trash2, EyeOff } from 'lucide-react';
 import { Column as ColumnType, Task } from '@/types';
-import { cn } from '@/lib/utils';
 import Button from '@/components/ui/Button';
 import ContextMenu, { ContextMenuItem } from '@/components/ui/ContextMenu';
 import DroppableColumn from '@/components/dnd/DroppableColumn';

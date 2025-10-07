@@ -1,19 +1,12 @@
 'use client';
 
 import React from 'react';
-import {
-  Calendar,
-  MessageSquare,
-  Paperclip,
-  CheckSquare,
-  Clock,
-  AlertCircle,
-} from 'lucide-react';
-import { Task, User } from '@/types';
+import { CheckSquare } from 'lucide-react';
+import { Task } from '@/types';
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 import Avatar from '@/components/ui/Avatar';
-import { cn, formatDate, getPriorityColor, getPriorityIcon, isOverdue } from '@/lib/utils';
+import { cn, formatDate, isOverdue } from '@/lib/utils';
 
 export interface TaskCardProps {
   task: Task;

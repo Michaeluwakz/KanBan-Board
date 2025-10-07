@@ -6,7 +6,6 @@ import {
   DragOverlay,
   closestCorners,
   KeyboardSensor,
-  PointerSensor,
   useSensor,
   useSensors,
   DragStartEvent,
@@ -91,4 +90,5 @@ const KanbanDndProvider: React.FC<DndProviderProps> = ({
 };
 
 export default KanbanDndProvider;
+
 

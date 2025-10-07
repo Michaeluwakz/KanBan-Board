@@ -2,9 +2,8 @@
 
 import React, { useState, useCallback } from 'react';
 import { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
 import { Plus } from 'lucide-react';
-import { Board, Column as ColumnType, Task } from '@/types';
+import { Board, Task } from '@/types';
 import { useBoardStore } from '@/store/board-store';
 import KanbanDndProvider from '@/components/dnd/DndProvider';
 import Column from '@/components/columns/Column';
@@ -38,10 +37,10 @@ const BoardView: React.FC<BoardViewProps> = ({ board, onUpdateBoard }) => {
   const boardColumns = columns.filter((col) => col.boardId === board.id);
   const boardTasks = Array.from(tasks.values()).filter((task) => task.boardId === board.id);
 
-  const getTasksByColumn = (columnId: string) =>
+  const getTasksByColumn = useCallback((columnId: string) =>
     boardTasks
       .filter((task) => task.columnId === columnId)
-      .sort((a, b) => a.position - b.position);
+      .sort((a, b) => a.position - b.position), [boardTasks]);
 
   const handleDragStart = useCallback((event: DragStartEvent) => {
     const task = tasks.get(event.active.id as string);

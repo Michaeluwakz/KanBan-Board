@@ -13,7 +13,7 @@ import {
   Edit2,
   X,
 } from 'lucide-react';
-import { Task, Priority } from '@/types';
+import { Task } from '@/types';
 import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
@@ -378,4 +378,5 @@ const TaskModal: React.FC<TaskModalProps> = ({
 };
 
 export default TaskModal;
+
 

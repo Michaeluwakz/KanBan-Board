@@ -25,7 +25,7 @@ const ColumnManagement: React.FC<ColumnManagementProps> = ({
   onAddColumn,
   onUpdateColumn,
   onDeleteColumn,
-  onReorderColumns,
+  onReorderColumns: _onReorderColumns,
 }) => {
   const [newColumnName, setNewColumnName] = useState('');
   const [newColumnColor, setNewColumnColor] = useState('#3B82F6');
@@ -252,7 +252,7 @@ const ColumnManagement: React.FC<ColumnManagementProps> = ({
         <div className="glass p-3 rounded-xl border">
           <h4 className="font-semibold mb-2">💡 Column Tips</h4>
           <div className="space-y-1 text-sm text-muted-foreground">
-            <div>• Use descriptive names like "In Review", "Testing", or "Blocked"</div>
+            <div>• Use descriptive names like &quot;In Review&quot;, &quot;Testing&quot;, or &quot;Blocked&quot;</div>
             <div>• Choose colors that match your workflow stages</div>
             <div>• You need at least one column to organize tasks</div>
             <div>• Drag columns to reorder them in your board</div>

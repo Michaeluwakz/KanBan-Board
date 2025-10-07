@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Activity as ActivityIcon, User, Clock } from 'lucide-react';
+import { Activity as ActivityIcon, Clock } from 'lucide-react';
 import { Activity, ActivityType } from '@/types';
 import Avatar from '@/components/ui/Avatar';
 import { formatDateTime } from '@/lib/utils';
@@ -120,4 +120,5 @@ const TaskActivity: React.FC<TaskActivityProps> = ({ activities }) => {
 };
 
 export default TaskActivity;
+
 

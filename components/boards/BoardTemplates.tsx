@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Code, TestTube, Rocket, Bug, Zap, Workflow } from 'lucide-react';
 import Modal from '@/components/ui/Modal';
 import Card from '@/components/ui/Card';
 
@@ -168,4 +167,5 @@ const BoardTemplates: React.FC<BoardTemplatesProps> = ({
 };
 
 export default BoardTemplates;
+
 
