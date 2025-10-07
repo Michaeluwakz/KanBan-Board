@@ -10,7 +10,7 @@ import { cn, formatDate, isOverdue } from '@/lib/utils';
 
 export interface TaskCardProps {
   task: Task;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent) => void;
   onDoubleClick?: () => void;
   isSelected?: boolean;
   isDragging?: boolean;

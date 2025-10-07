@@ -74,6 +74,8 @@ export interface Task {
   attachments?: Attachment[];
   checklistItems?: ChecklistItem[];
   activities?: Activity[];
+  dependencies?: TaskDependency[];
+  dependents?: TaskDependency[];
 }
 
 export interface TaskAssignee {
@@ -125,6 +127,15 @@ export interface ChecklistItem {
   position: number;
   createdAt: Date;
   taskId: string;
+}
+
+export interface TaskDependency {
+  id: string;
+  dependentTaskId: string;
+  blockingTaskId: string;
+  createdAt: Date;
+  dependentTask?: Task;
+  blockingTask?: Task;
 }
 
 export interface Activity {

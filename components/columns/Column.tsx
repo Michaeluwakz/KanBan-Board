@@ -158,7 +158,7 @@ const Column: React.FC<ColumnProps> = ({
           <SortableTask key={task.id} id={task.id}>
             <TaskCard
               task={task}
-              onClick={(e) => handleTaskClick(task, e)}
+              onClick={(e) => e && handleTaskClick(task, e)}
               isSelected={selectedTasks.has(task.id)}
             />
           </SortableTask>

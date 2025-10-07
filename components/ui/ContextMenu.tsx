@@ -22,7 +22,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ items, children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const menuRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -130,10 +130,9 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ items, children }) => {
 
   return (
     <>
-      {React.cloneElement(children, {
-        ref: triggerRef,
-        onContextMenu: handleContextMenu,
-      })}
+      <div ref={triggerRef} onContextMenu={handleContextMenu}>
+        {children}
+      </div>
       {menu && createPortal(menu, document.body)}
     </>
   );

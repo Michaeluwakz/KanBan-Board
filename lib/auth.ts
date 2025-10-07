@@ -6,7 +6,7 @@ import GitHubProvider from 'next-auth/providers/github';
 import { prisma } from './prisma';
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma) as unknown,
+  adapter: PrismaAdapter(prisma) as ReturnType<typeof PrismaAdapter>,
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.sub as string;
+        (session.user as { id?: string }).id = token.sub as string;
       }
       return session;
     },
