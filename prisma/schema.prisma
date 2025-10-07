@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Priority {
@@ -102,7 +102,7 @@ model Board {
   name        String
   description String?
   background  String?
-  isArchived  Int      @default(0)
+  isArchived  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   creatorId   String
@@ -134,7 +134,7 @@ model Column {
   position Int
   color    String?
   wipLimit Int?
-  isHidden Int     @default(0)
+  isHidden Boolean @default(false)
   boardId  String
 
   board Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
@@ -151,7 +151,7 @@ model Task {
   startDate    DateTime?
   timeEstimate Int?
   timeSpent    Int?
-  isArchived   Int       @default(0)
+  isArchived   Boolean   @default(false)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   boardId      String
@@ -231,7 +231,7 @@ model Attachment {
 model ChecklistItem {
   id          String   @id @default(cuid())
   content     String
-  isCompleted Int      @default(0)
+  isCompleted Boolean  @default(false)
   position    Int
   createdAt   DateTime @default(now())
   taskId      String

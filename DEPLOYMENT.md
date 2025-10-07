@@ -89,7 +89,42 @@ docker push registry.example.com/kanban-board:latest
 
 ## Vercel Deployment
 
-### 1. Via Vercel CLI
+### 1. Database Setup (CRITICAL - Must do first!)
+
+**Option A: Vercel Postgres (Easiest)**
+1. Go to your Vercel project dashboard
+2. Click **Storage** tab
+3. Click **Create Database** → Select **Postgres**
+4. Vercel automatically adds `DATABASE_URL` environment variable
+5. Click **Connect** to link it to your project
+
+**Option B: External PostgreSQL (Neon/Supabase)**
+1. Create account at [neon.tech](https://neon.tech) or [supabase.com](https://supabase.com)
+2. Create new PostgreSQL database
+3. Copy connection string
+4. In Vercel: Go to **Settings** → **Environment Variables**
+5. Add `DATABASE_URL` with your connection string
+6. Click **Save**
+
+### 2. Add Required Environment Variables
+
+Go to Vercel **Settings** → **Environment Variables** and add:
+
+\`\`\`
+DATABASE_URL="postgresql://..." (auto-added if using Vercel Postgres)
+NEXTAUTH_URL="https://your-vercel-url.vercel.app"
+NEXTAUTH_SECRET="generate-with-openssl-rand-base64-32"
+\`\`\`
+
+### 3. Deploy via GitHub Integration
+
+1. Push code to GitHub (you've already done this!)
+2. Go to [vercel.com](https://vercel.com)
+3. Import your repository
+4. **IMPORTANT**: Don't deploy yet if you haven't set up the database!
+5. Redeploy after adding environment variables
+
+### 4. Via Vercel CLI (Alternative)
 
 \`\`\`bash
 # Install Vercel CLI
@@ -102,31 +137,25 @@ vercel login
 vercel --prod
 \`\`\`
 
-### 2. Via GitHub Integration
+### 5. Run Database Migrations
 
-1. Push code to GitHub
-2. Go to [vercel.com](https://vercel.com)
-3. Import your repository
-4. Configure environment variables
-5. Deploy
-
-### 3. Database Setup for Vercel
-
-Use a managed PostgreSQL service:
-- **Neon** (Recommended for Vercel)
-- **Supabase**
-- **Railway**
-- **AWS RDS**
-
-Configure `DATABASE_URL` in Vercel environment variables.
-
-### 4. Post-deployment
+After deployment with proper DATABASE_URL:
 
 \`\`\`bash
-# Run migrations on Vercel
+# Pull environment variables
 vercel env pull .env.local
+
+# Run migrations
 npx prisma migrate deploy
+
+# OR push schema directly
+npx prisma db push
 \`\`\`
+
+**Note**: If you've already deployed and getting "Failed to create board" error, you need to:
+1. Set up a PostgreSQL database (steps above)
+2. Add DATABASE_URL to Vercel environment variables
+3. Redeploy your application
 
 ## Railway Deployment
 
