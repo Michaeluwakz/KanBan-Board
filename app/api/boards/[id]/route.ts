@@ -79,7 +79,7 @@ export async function PUT(
         ...(name && { name }),
         ...(description !== undefined && { description }),
         ...(background !== undefined && { background }),
-        ...(isArchived !== undefined && { isArchived: isArchived ? 1 : 0 }),
+        ...(isArchived !== undefined && { isArchived }),
       },
       include: {
         creator: {

@@ -12,7 +12,7 @@ export async function GET(
     const tasks = await prisma.task.findMany({
       where: {
         boardId: id,
-        isArchived: 0,
+        isArchived: false,
       },
       include: {
         column: true,
