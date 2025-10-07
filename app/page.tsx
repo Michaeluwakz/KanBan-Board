@@ -13,10 +13,17 @@ export default function Home() {
 
   const fetchBoards = useCallback(async () => {
     try {
+      console.log('Fetching boards...');
       const response = await fetch('/api/boards');
+      console.log('Boards response status:', response.status);
+      
       if (response.ok) {
         const data = await response.json();
+        console.log('Boards fetched:', data.length, 'boards');
         setBoards(data);
+      } else {
+        const error = await response.json();
+        console.error('Failed to fetch boards:', error);
       }
     } catch (error) {
       console.error('Error fetching boards:', error);
@@ -63,19 +70,28 @@ export default function Home() {
 
   const handleCreateBoard = async (data: { name: string; description?: string }) => {
     try {
+      console.log('Creating board with data:', data);
       const response = await fetch('/api/boards', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
+      console.log('Response status:', response.status);
+      
       if (response.ok) {
         const newBoard = await response.json();
-        fetchBoards(); // Refresh boards list
-        fetchBoardDetails(newBoard.id); // Open the new board
+        console.log('Board created successfully:', newBoard);
+        await fetchBoards(); // Refresh boards list
+        await fetchBoardDetails(newBoard.id); // Open the new board
+      } else {
+        const error = await response.json();
+        console.error('Failed to create board:', error);
+        alert(`Failed to create board: ${error.error || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Error creating board:', error);
+      alert('Failed to create board. Please check the console for details.');
     }
   };
 

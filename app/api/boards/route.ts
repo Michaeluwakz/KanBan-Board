@@ -137,7 +137,7 @@ export async function POST(request: NextRequest) {
     // Log activity
     await prisma.activity.create({
       data: {
-        type: 'BOARD_UPDATED',
+        type: 'BOARD_CREATED',
         content: `Created board "${name}"`,
         boardId: board.id,
         userId,
