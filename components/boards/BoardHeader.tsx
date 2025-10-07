@@ -11,7 +11,7 @@ import {
   BarChart3,
   Columns,
 } from 'lucide-react';
-import { Board, Column } from '@/types';
+import { Board, Column, Task } from '@/types';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Avatar from '@/components/ui/Avatar';
@@ -22,7 +22,7 @@ import ColumnManagement from './ColumnManagement';
 
 export interface BoardHeaderProps {
   board: Board;
-  tasks?: unknown[];
+  tasks?: Task[];
   onUpdateBoard?: (boardId: string, updates: Partial<Board>) => void;
   onArchiveBoard?: (boardId: string) => void;
 }
