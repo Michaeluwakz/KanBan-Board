@@ -426,13 +426,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Tailwind CSS** for the utility-first CSS framework
 - **All contributors** who help make this project better
 
-## 📞 Support
-
-- 📧 **Email:** support@kanbanboard.com
-- 🐛 **Issues:** [GitHub Issues](https://github.com/your-repo/issues)
-- 💬 **Discussions:** [GitHub Discussions](https://github.com/your-repo/discussions)
-- 📖 **Documentation:** All `.md` files in the repository
-
 ---
 
 <div align="center">
